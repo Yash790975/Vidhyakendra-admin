@@ -1,7 +1,8 @@
 'use client'
 
 export const dynamic = "force-dynamic";
-import React, { useState, useEffect } from 'react'
+// import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -18,7 +19,7 @@ import { cn } from '@/lib/utils'
 
 type SectionId = 'personal' | 'contact' | 'address' | 'documents' | 'professional' | 'qualification' | 'experience' | 'bank'
 
-export default function AddTeacherPage() {
+function AddTeacherContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const editId = searchParams.get('edit')
@@ -1784,5 +1785,18 @@ export default function AddTeacherPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+
+export default function AddTeacherPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="h-16 w-16 animate-spin rounded-full border-4 border-[#1897C6] border-t-transparent" />
+      </div>
+    }>
+      <AddTeacherContent />
+    </Suspense>
   )
 }
